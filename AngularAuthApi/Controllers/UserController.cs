@@ -1,6 +1,7 @@
 ﻿using AngularAuthApi.Context;
 using AngularAuthApi.Helpers;
 using AngularAuthApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace AngularAuthApi.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<User>> GetAllUsers()
         {
@@ -36,8 +38,10 @@ namespace AngularAuthApi.Controllers
             {
                 return BadRequest();
             }
+
             var user = await _context.Users
                 .FirstOrDefaultAsync(t => t.UserName == userObj.UserName);
+
             if (user == null)
             {
                 return NotFound(new { Message = "User not found!" });
@@ -48,6 +52,7 @@ namespace AngularAuthApi.Controllers
             }
 
             user.Token = CreateJwt(user);
+
             return Ok(new
             {
                 Token = user.Token,
@@ -80,6 +85,7 @@ namespace AngularAuthApi.Controllers
         private Task<bool> CheckUserNameExistAsync(string userName) =>
 
             _context.Users.AnyAsync(t => t.UserName == userName);
+
         private Task<bool> CheckEmailExistAsync(string email) =>
             _context.Users.AnyAsync(t => t.Email == email);
 
