@@ -4,6 +4,7 @@ namespace AngularAuthApi.Helpers
 {
     public class PasswordHasher
     {
+        
         private static RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
         private static readonly int SaltSize = 16;
         private static readonly int HashSize = 20;
@@ -34,7 +35,7 @@ namespace AngularAuthApi.Helpers
                 if (hashByte[i + SaltSize] != hash[i]) return false;
 
             }
-
+            
             return true;
         }
     }

@@ -1,0 +1,23 @@
+﻿@AngularAuthApi_HostAddress = https://localhost:7121
+
+GET {{AngularAuthApi_HostAddress}}/api/user
+
+###
+
+POST {{AngularAuthApi_HostAddress}}/api/user/authentificate
+Content-Type: application/json
+
+{
+  //User
+}
+
+###
+
+POST {{AngularAuthApi_HostAddress}}/api/user/register
+Content-Type: application/json
+
+{
+  //User
+}
+
+###
